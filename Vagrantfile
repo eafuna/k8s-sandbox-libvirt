@@ -7,8 +7,9 @@ VAGRANT_BOX         = "generic/alpine317"
 VAGRANT_BOX_VERSION = "4.2.10"
 
 MASTER_NODES_COUNT  = 1
-WORKER_NODES_COUNT  = 2
+WORKER_NODES_COUNT  = 1
 PRIVATE_NETWORK     = "172.16.16.100"
+POD_CIDR            = "192.168.0.0/16" # default of calico
 
 CPUS_MASTER_NODE    = 2
 MEMORY_MASTER_NODE  = 2048
@@ -52,7 +53,7 @@ Vagrant.configure(2) do |config|
         v.cpus    = CPUS_MASTER_NODE
       end
     
-      node.vm.provision "shell", path: "bootstrap/cp.sh"
+      node.vm.provision "shell", path: "bootstrap/cp.sh", args: ["#{POD_CIDR}"]
     
     end
 
